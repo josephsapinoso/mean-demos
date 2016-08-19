@@ -1,0 +1,14 @@
+Middleware:
+
+A middleware function has access to:
+	1. the request object (req)
+	2. the response object (res)
+	3. the next middlware in sequence (next)
+
+A middlware must either:
+	1. End the request-response cyle by using res.end()
+	2. Call next() to invoke the next middlware
+
+Besides the middlware that you create, some built-in middleware and third-party middleware are also available.
+
+In this demo, we have learned how to define and register middleware.
