@@ -1,0 +1,26 @@
+The Key Features of MongoDB:
+
+- MongoDB is an open-source document database
+- provides high performance, high availability, and easy scaling
+- a MongoDB deployment can hold a number of databases
+- a database in MongoDB is a set of collections
+- a collection is a set of documents 
+- a document is a record, which is composed of key-value pairs 
+
+- MongoDB documents are similar to JSON objects 
+- The fields in a document may include arrays, other documents, and arrays of documents
+	- ex. {
+		name: "Helen",
+		age: 26,
+		hobbies: ['singing', 'reading']	
+	}
+
+- MongoDB supports a dynamic schema
+	- no well-defined model of which data is stored in the database 
+	- varying sets of fields and different data types for the fields
+
+- Advantages:
+	- storing data in form of objects provides better synergy between database and application.
+	- Embedded documents and arrays reduce the need to create joins
+	- The schemaless nature of MongoDB is an ideal match for the constantly evolving data structures in Web applications
+	- The data types supported by MongoDB are very similar to native JS data types. 

@@ -1,0 +1,68 @@
+Basic MongoDB Commands:
+
+mongod - starts server
+
+mongo - opens mogoDB client
+
+cls - clears screen
+
+use <database_name> - goes to specific database
+
+	- ex. "use articledb" - this simultaneously creates and opens a new db called "articledb"
+
+db - checks what database you are currently on
+
+show dbs - shows the databases you currently have
+
+db.dropDatabase() - will drop a database. Delete. 
+
+------------------------------------------------------------------------------------------------
+
+Now we are going to create a collection within "articledb" by the name of "collection1":
+
+	- db.createCollection ("collection1")
+		- note: you do not need to create a collection within mongoDB. 
+		- a collection is automatically created when you insert the first document in a collection
+
+	- show collections
+		- see the list of collections in "articledb"
+
+	- now let's use the "insert" command to insert a document that will be another collection:
+		- db.articles.insert({"username":"Tom", "title":"hello", "text": "Hello World", "timestamp":Date.now()})
+		- this creates a db called "articles" to the collection
+
+	- query data from the "articles" collection using the "find" command:
+		- db.articles.find()
+		- notice how the data is displayed in an unstructured format:
+			- { "_id" : ObjectId("57b751c5ee58538b2ca5e9cd"), 
+				"username" : "Tom", 
+				"title" : "hello", 
+				"text" : "Hello World", 
+				"timestamp" : 1471631813121 
+			}
+		- you can display it in a better format: db.articles.find().pretty()
+			- {
+				"_id" : ObjectId("57b751c5ee58538b2ca5e9cd"),
+				"username" : "Tom",
+				"title" : "hello",
+				"text" : "Hello World",
+				"timestamp" : 1471631813121
+			}
+
+------------------------------------------------------------------------------------------------
+
+How to update a document in a collection:
+
+	- Change the username in the document we just created:
+		- db.articles.update ({"username": "Tom"}, {$set:{"username": "Nancy"}})
+		- Confirm change with: db.articles.find().pretty()
+
+	- remove a collection:
+		- db.articles.drop()
+		- this deletes the collection named "articles"
+	
+	
+		
+
+
+
