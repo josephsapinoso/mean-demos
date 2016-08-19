@@ -1,0 +1,5 @@
+Creating front-end and Middleware developments with Node.js and Express.js.
+
+We don't have a database yet so we will simply point to messages in REST endpoints that explain what the actions are doing. 
+
+
