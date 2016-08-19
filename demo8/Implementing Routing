@@ -1,0 +1,44 @@
+Implementing Routing
+--------------------
+
+1. Routing determines the behavior of an application in response to a request sent to a particular endpoint. 
+
+	Endpoint - the URI and http method (ex. GET, POST)
+
+2. Routing can be implemented by using:
+-------------------------------------------------------------------------------------------------------------------------------
+- Application-level middleware
+
+		- Bound to an instance of the app object
+		- conventionally denotes an an instance of an express application.
+
+A route can be defined by using the following structure:
+	
+	app.<METHOD>(<PATH>, <HANDLER>)
+	
+	- method - http request method (eg. get/post)
+	- path - path on server
+	- handler - function that needs to be executed when requested route matches path specified in function.
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+	- Router-level middleware
+
+
+3. Router-level middleware is bound to an instance of express.Router()
+
+4. A router object is an instance of middleware and routes
+
+5. A router acts as a small application that can only perform middleware and routing functions 
+
+6. A router acts just like middleware. It can be set to be used as an argument to:
+	
+	- the app.use() method
+	- another router's use() method
+
+
+In this lesson, we learned:
+
+- implementing routing
+- define and register application-level and router-level middleware
