@@ -17,6 +17,18 @@
 			<input class="button" type="submit" value="Post" />
 		</form>
 
+		<div id="articles-posted">
+
+			<h2>Articles Posted</h2>
+
+			<div ng-repeat="article in articles | orderBy: 'timestamp':true">
+				<h3>{{article.title}}</h3>
+				<p>{{article.text}}</p>
+				<p><small> Posted by {{article.username}} at {{article.timestamp | date:"h:mma 'on' MMM d, y"}}</small></p>
+			</div>
+
+		</div>
+
 	</div>
 
 </body>
