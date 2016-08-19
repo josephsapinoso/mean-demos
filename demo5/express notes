@@ -1,0 +1,3 @@
+npm install express-generator -g (installs express server side files and folders globally)
+
+express --ejs (creates a barebones applications). we want to use the ejs rendering engine.
