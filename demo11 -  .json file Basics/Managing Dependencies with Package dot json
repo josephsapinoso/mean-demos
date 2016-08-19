@@ -1,0 +1,9 @@
+Managing Dependencies with Package.json
+----------------------------------------------------------------------
+
+- package.json contains various metadata about your application including dependencies.
+	- version numbers prefix by ~ that specifies that the latest patch version should be used by the application.
+
+- to ensure that applications get installed and added to the .json file, add --save to the installation like so:
+
+	- npm install mongoose --save 

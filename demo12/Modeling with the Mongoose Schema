@@ -1,0 +1,73 @@
+Modeling with the Mongoose Schema:
+----------------------------------------------------------------------------
+
+- translates data from db to js objects 
+- bridge the gap of schemaless approach of mongodb 
+
+----------------------------------------------------------------------------
+
+1. Install new app w/ express --ejs mongoose_demo
+
+2. Install mongoose with - npm install mongoose --save
+
+3. In app.js:
+
+	var mongoose = require('mongoose');
+
+	mongoose.connect('mongodb://localhost/mydb');
+
+4. Define a schema (still in app.js):
+	
+	var UserSchema = new mongoose.Schema({firstname: 'string', lastname: 'string'});
+
+5. Define a model based on the schema:
+
+	var User = mongoose.model ('User', UserSchema); // 'User' is the name of the model, and UserSchema is the name of the schema we will use
+
+6. Create a user1 and add it to the User mongoose model:
+
+	var user1 = new User();
+	user1.firstname = "Sandra";
+	user1.lastname = "Williams";
+
+7. Call the same method on the user1 object to save the user1 document into the database:
+
+	user1.save(function(err, user1){
+	  if(err)
+	    res.err;
+	});
+ 
+8. Start mongod and npm start
+
+----------------------------------------------------------------------------
+
+Let's now test if user1 was saved into the database:
+
+1. mongo
+
+2. use mydb
+
+3. show collections
+
+	- you can see 'users' has been created
+
+4. db.users.find()
+
+	- { "_id" : ObjectId("57b76bd786b6d7ce0c0cc596"), "lastname" : "Williams", "firstname" : "Sandra", "__v" : 0 }
+
+5. db.users.find().pretty()
+
+	{
+		"_id" : ObjectId("57b76bd786b6d7ce0c0cc596"),
+		"lastname" : "Williams",
+		"firstname" : "Sandra",
+		"__v" : 0
+	}
+
+
+
+
+	
+	
+
+

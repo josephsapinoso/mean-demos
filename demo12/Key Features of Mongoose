@@ -1,0 +1,20 @@
+Key Features of Mongoose:
+--------------------------------------------------------------------------------------------------------------------
+
+- To connect a Node application to MongoDB, you can use the mongodb module:
+	- npm install mongodb 
+
+- MongoDB doesn't requre all documents in a collection to have the same structure.
+	- may cause problems because w/ no schema, you can add anything to the DB
+
+- When you want to keep your data organized and structured, it is sometimes necesssary for documents to be similar
+	- this is where Mongoose can be useful
+
+--------------------------------------------------------------------------------------------------------------------
+
+- Mongoose is a Node.js Object Data Mapping (ODM) module 
+- It adds MongoDB support to an Express application 
+- Mongoose uses schemas to model entities and save them as MongoDB documents. 
+
+- To connect to mongodb from an application, you can use the mongoose.connect() function:
+	- mongoose.connect (mongodb://localhost/<database_name>)
