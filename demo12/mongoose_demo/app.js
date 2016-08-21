@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
 
+mongoose.connect('mongodb://localhost/mydb');
+
 var UserSchema = new mongoose.Schema({
       firstname: 'string', 
       lastname: 'string'
@@ -26,7 +28,6 @@ user1.save(function(err, user1){
     res.err;
 });
 
-mongoose.connect('mongodb://localhost/mydb');
 //--------------------------------------------------------------------------------------
 
 var routes = require('./routes/index');
