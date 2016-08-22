@@ -1,0 +1,27 @@
+Using the ngResource Module
+---------------------------
+
+- The ngResouces module enables interaction with RESTful Web services by using the $resource service 
+- $resource is a higher level abstraction over the $http service
+- $http handles general purpose communication with the HTTP server whereas...
+- $resource is used specifically for interacting with RESTful APIs
+
+- To use $resource, you need to include the ngResource module:
+	
+	<script src="angular-resource.js">
+	<script src="ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-resource.js">
+
+	- Download it or use its CDN
+
+Demo:
+
+Right now, the app is using the $http service to interact with the REST apis; let's see how to use the $resource service instead:
+
+1. Add <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script> to index.html
+
+2. In public/javascripts/articleApp.js:
+	
+	
+
+
+
