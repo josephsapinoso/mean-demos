@@ -1,0 +1,10 @@
+Create a Simple MEAN Application
+--------------------------------
+
+It's time to put our knowledge to work!
+
+We will now create teh AngularJS frontend for an application that allows users to post and view details - such as Title, Venue, and date - about events.
+
+- Create a RESTful API to handle GET and POST requests for event details using Node.js, Express, and MongoDB. 
+
+- Finally, we will integrate the frontend with the backend 

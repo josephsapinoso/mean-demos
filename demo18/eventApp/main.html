@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Events</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+	<script src="javascripts/eventApp.js"></script>
+</head>
+
+<body ng-app="eventApp">
+	<div id='main' ng-controller="mainController">
+
+		<h1>Events</h1>
+
+		<form ng-submit="post()">
+			<input required type="text" placeholder="Event Title" ng-model="newEvent.title" /><br/><br/>
+			<input required type="text" placeholder="Venue" ng-model="newEvent.venue" /><br/><br/>
+			<input required type="date" ng-model="newEvent.date" /><br/><br/>
+			<input class="button" type="submit" value="Post" />
+		</form>
+
+		<div id="events-posted">
+			<h2>Events Posted</h2>
+			<div ng-repeat="event in events | orderBy: 'date'">
+				<p>{{event.title}}	at {{event.venue}} on {{event.date}}</p>
+			</div>
+		</div>	
+	</div>
+</body>
+</html>
