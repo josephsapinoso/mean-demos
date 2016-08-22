@@ -1,0 +1,8 @@
+- we want to be able to store our data in persistant storage, not just an array. 
+
+- first confirm that database is working properly with postman. (I'm also using robomongo)
+
+- in order to make api calls to the server, we need to use the $http service
+
+- we learned how to make calls to the api server using angularJS front-end
+
