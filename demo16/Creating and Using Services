@@ -1,0 +1,46 @@
+Creating and Using Service
+--------------------------
+
+- Services are used to organize and share code across an app
+
+	- "Controller 1" & "Controller 2" share "User Service 1"
+	- The logic to fetch data could be included in a service
+	- Angular has predefined services:
+		- $http
+		- $route
+	- You can also create custom services to organize and reuse code
+
+- In this lesson, we will focus on creating a custom service. In this case, it will be the factory() method. 
+
+- ex:
+
+var app = angular.module('myapp', []);
+	
+	app.factory('userService', function(){ // the service
+	
+		var factory = {}; // creates an object
+	
+		factory.getUsers = function () { // populates it with an array of users
+			factory.Users = ['Anna', 'Tom', 'Jill];
+			return (factory.Users);	
+		}	
+		return factory; // returns the object 
+	});
+
+	- The service simply creates an object, populates it with an array containing the names of users and then returns the object. 
+
+- Notice that the above service requires no dependency; however, we may need to create services that need dependencies. 
+
+	- We can apply this method as a dependency to inject in controllers. 
+
+	-ex. To use this service we just created:
+
+		app.controller('userCtrl', function($scope, userService) // declare the name of the service as a dependency of the controller
+		{
+			$scope.names = userService.getUsers(); // call the service 
+		});
+
+
+- In this topic we learned about creating and using services 
+
+
