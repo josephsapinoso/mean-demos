@@ -1,0 +1,24 @@
+Authentication and Authorization 
+--------------------------------
+
+Two important concepts used for securing an application are:
+	1. Authentication
+		- confirms that users are who they say they are
+		- is implemented by prompting user to enter username and pw
+	2. Authorization 	
+		- Confirms whether a user must be granted access to a particular resource 
+
+Setting Up Views for Sign Up and Sign In 
+----------------------------------------
+
+Let's add authentication to our articles web app. 
+
+1. Set up the views for sign-up and sign-in 
+
+2. Set up front-end Routes
+
+3. Create authController
+
+4. Test w/ npm start
+
+
