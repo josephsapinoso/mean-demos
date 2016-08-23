@@ -1,0 +1,62 @@
+Client-side Code for Authentication
+-----------------------------------
+
+We already created:
+
+1. The articles app
+2. The views for sign-up and sign-in
+3. The server-side code for authentication
+4. Confirmed authentication APIs are working properly w/ Postman
+
+-----------------------------------
+
+In articleApp.js:
+
+1. replace the $scope.signin function with other code:
+
+	$scope.signin = function(){
+		$http.post('/auth/signin', $scope.user).success(function(response){
+			if(response.state == 'sucess'){
+				$location.path('/');
+			}
+			else {
+				$scope.msg = response.message; 
+			}
+		});
+	};
+
+2. similarly, we're replace the $scope.signup function with other code:
+
+	$scope.signup = function(){ // handle sign-up requests w/ response
+		$http.post('/auth/signup',$scope.user).success(function(response){
+			if (response.state =='success'){
+				$location.path('/');
+			}
+			else {
+				$scope.msg = response.message;
+			}
+		});
+
+3. add the $http and $location dependencies to the authController
+
+4. Save the file 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
