@@ -1,0 +1,30 @@
+Creating the User Model
+-----------------------
+
+1. Create new file: models/users.js
+
+	- require mongoose
+	- create the schema
+	- name the model 'User'and attach it to the schema
+
+2. Add code to store user details in the database (for checking is model is saving data to DB) in models/users.js
+
+User.create({username: 'sam', password: 'sam'});
+User.create({username: 'tom', password: 'tom'});
+
+3. In app.js
+
+	- require('./models/users');
+
+4. Open mongo shell
+
+	- mongo articlesDB
+	- db.users.find()
+	- confirm users are there
+	- remove users:
+		- db.users.remove({})
+
+
+In this topic we learned how to create the user model to store user details in the database
+
+

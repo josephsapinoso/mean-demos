@@ -1,0 +1,28 @@
+Fundamentals of Passport Authentication
+---------------------------------------
+
+Passport is a Node.js middleware that helps to authenticate requests sent to an Express application. 
+	- single purpose: authentication
+	- "seperation of concerns"
+	- extremely easy to integrate into an application
+	- Passport authenticates requests through an extensible set of plugins known as "strategies"
+
+
+
+Strategies
+
+	- Local --> Passport-local 
+		- This strategy involves authenticating users through a username and password
+
+	- OpenID --> Passport-openid
+		- open standard for federated authentication (see below for def.)
+		- In this strategy, users present an OpenID to sign in to a website after choosing an OpenID Provider...
+		- The provider issues an assertion to confirm the user's id, and the website verifies this assertion to sign in user.
+
+	- Oauth --> Passport-oauth
+		- Enables authentication through Oauth Authentication provides such as Twitter, Facebook and Google
+
+
+"federated authentication":
+Federated Identity (FID) refers to where the user stores their credentials. Alternatively, FID can be viewed as a way to connect Identity Management systems together. In FID, a user's credentials are always stored with the "home" organization (the "identity provider").
+
