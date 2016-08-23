@@ -1,0 +1,101 @@
+Server-side Code for Authentication
+-----------------------------------
+
+- For authenticating users of this application, we will be using the Local Strategy of Passport
+	- This means we will be storing user log-in details in a database 
+
+- Background:
+	- We created a model, schema & front-end routes
+
+
+Install Required Modules
+------------------------
+
+1. Install the passport module: 
+
+	npm install passport --save
+
+2. Install the passport local module: 
+
+	npm install passport-local --save
+
+3. Install module called express-session for handling sessions: 
+
+	npm install express-session -save
+
+4. Install a module that will help us save our password as hashes (to prevent saving in text-form in db):
+
+	npm install bcrypt-nodejs --save 
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+1. In app.js:
+
+	1. Add new require statements for passport modules
+
+	2. change the middleware section to use the session module:
+
+		app.use(session({secret: 'keyboard cat'}));
+
+	3. Add passport as an application-level middleware:
+
+		app.use(passport.initialize());
+		app.use(passport.session());
+
+
+2. Create new file: ./passport-initialize.js
+
+3. Back in app.js, add in code to require the passport-initialize.js file:
+
+	var initPassport = require('./passport-initialize');
+	initPassport(passport);
+
+4. Create new file: /routes/authenticate.js
+
+	- add the authentication api
+
+5. Back in app.js, add in code to reference to the /routes/authenticate.js file:
+
+	var authenticate = require('./routes/authenticate')(passport);
+
+	- add an app.use statement:
+
+		app.use('auth',authenticate); 
+
+
+---------------------------------------------------------------------------------------------------------
+
+Test Requests:
+
+1. Open postman
+
+2. Test Post @ http://localhost:3000/auth/signup:
+
+	POST/Params: Body(JSON): {"username": "jack", "password": "jack"}
+
+	Success!
+
+3. 2. Test Post @ http://localhost:3000/auth/signin and send the same data:
+
+	POST/Params: Body(JSON): {"username": "jack", "password": "jack"}
+
+	Sucess! 
+
+	- If you change the name to a user that does not exist:
+
+	{
+	  "state": "failure",
+	  "user": null,
+	  "message": "Invalid username or password"
+	}
+
+	
+---------------------------------------------------------------------------------------------------------
+
+In this topic we learned how to write the server-side code for implementing authentication
+		
+
+
+
