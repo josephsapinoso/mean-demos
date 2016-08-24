@@ -1,0 +1,28 @@
+<html>
+<head>
+	<title>Articles</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script>
+	<script src="javascripts/articleApp.js"></script>
+</head>
+
+<body ng-app="articleApp">
+
+	<div>
+		<a href="#/">Articles</a> 
+		<a href="#/about">About</a>
+		<span ng-hide="authenticated"> <!-- This span will be hidden if the value of the $rootScope.authenticated variable is false-->
+			<a href="#/signup">Sign Up</a>
+			<a href="#/signin">Sign In</a>
+		</span>
+		<span ng-show="authenticated"> <!-- This span will be shown if the value of the $rootScope.authenticated variable is true-->
+			Welcome {{current_user}} 
+			<a href="#" ng-click="signout()">Sign Out</a>
+		</span>
+	</div>
+
+	<div ng-view></div>
+	
+</body>
+</html>

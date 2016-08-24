@@ -1,0 +1,26 @@
+Implementing Authorization
+--------------------------
+
+1. Only signed-in users should be able to post articles.
+2. All users can view articles posted by others
+3. As the users need to log in to post articles, the user should not be required to enter their user name while posting an article. 
+4. The user should be able to edit and delete their own articles, but should not be able to delete or edit articles posted by other users.
+=============================================================================================================================
+
+Only signed-in users should be able to post articles
+----------------------------------------------------
+
+1. in routes/api.js:
+
+- add a middleware function before all the other middleware functions in the file:
+
+router.use('/articles', function(req, res, next) {
+	if (req.method == 'GET')
+		return next();
+	else if (req.isAuthenticated())
+		return next();
+	else 
+		res.send ({status: 'Authentication Failure'});
+});
+
+=============================================================================================================================
