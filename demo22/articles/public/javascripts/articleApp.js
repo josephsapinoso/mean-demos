@@ -1,4 +1,13 @@
-var app = angular.module('articleApp', ['ngRoute','ngResource']); 
+var app = angular.module('articleApp', ['ngRoute','ngResource']).run(function($http, $rootScope) {
+	$rootScope.authenticated = false;
+	$rootScope.current_user = 'Guest';
+
+	$rootScope.signout = function(){
+		$http.get('auth/signout');
+		$rootScope.authenticated =false;
+		$rootScope.current_user = 'Guest';
+	};
+}); 
 
 app.config(function($routeProvider){
 	$routeProvider
@@ -44,15 +53,17 @@ app.controller('mainController', function($scope, $http, articleService){
 	}
 });
 
-app.controller('authController',function($scope, $http, $location){
-	$scope.user = {username: '', password: ''}; // stores details of user
-	$scope.msg = ''; // stores message 
+app.controller('authController',function($scope, $http, $location,$rootScope){
+	$scope.user = {username: '', password: ''}; 
+	$scope.msg = ''; 
 
 	$scope.signin = function(){
 		$http.post('/auth/signin', $scope.user).success(function(response){
-			if(response.state == 'sucess'){
+			if(response.state == 'success'){
+				$rootScope.authenticated = true;
+				$rootScope.current_user = response.user.username; // username of logged in user
 				$location.path('/');
-			}
+		}
 			else {
 				$scope.msg = response.message; 
 			}
@@ -62,6 +73,8 @@ app.controller('authController',function($scope, $http, $location){
 	$scope.signup = function(){ // handle sign-up requests w/ response
 		$http.post('/auth/signup',$scope.user).success(function(response){
 			if (response.state =='success'){
+				$rootScope.authenticated = true;
+				$rootScope.current_user = response.user.username; // username of logged in user
 				$location.path('/');
 			}
 			else {

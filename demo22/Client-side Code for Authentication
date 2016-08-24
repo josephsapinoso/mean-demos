@@ -16,7 +16,7 @@ In articleApp.js:
 
 	$scope.signin = function(){
 		$http.post('/auth/signin', $scope.user).success(function(response){
-			if(response.state == 'sucess'){
+			if(response.state == 'success'){
 				$location.path('/');
 			}
 			else {
@@ -40,6 +40,115 @@ In articleApp.js:
 3. add the $http and $location dependencies to the authController
 
 4. Save the file 
+
+5. Start the app and provide a username and password for sign-up. I will use "tom" & "tom"
+
+6. Click the sign-in button and provide the same credentials. You should now be back in your main.html
+
+7. now go back to sign-in at test the response to invalid user and password.
+
+	- got the response:"Invalid username or password". It worked!
+
+
+
+
+a link to "sign-out"
+--------------------
+
+Now what we want to do is make it so that whent he user is signed in, they do not see the "sign-in" or "sign-up" links, and instead see a link to "sign-out". For this we need a mechanism to get the name of the current user. 
+
+	- enter the "$rootScope" variable to store the value of the current user throughout the app. 
+
+		- a variable declared with $rootScope is accessible throughout the application
+
+$rootScope
+----------
+
+In articleApp.js:
+
+var app = angular.module('articleApp', ['ngRoute','ngResource']).run(function($http, $rootScope) {
+	$rootScope.authenticated = false;
+	$rootScope.current_user = 'Guest';
+
+	$rootScope.signout = function(){
+		$http.get('auth/signout');
+		$rootScope.authenticated =false;
+		$rootScope.current_user = 'Guest';
+	};
+}); 
+
+
+	- Added initialization code 
+		- initially user is not authenticated
+		- initially user is guest 
+
+	- Defined a function signout
+		- uses $http service to send a .get request to /auth/signout
+		- this resets authenticated and current_user to above default values 
+
+	- Once the user is signed in, we need to change the value of these $rootScope variables 
+
+
+Let's now look under authController at the $scope.signin method and add a couple $rootScope statements:
+
+$scope.signin = function(){
+	$http.post('/auth/signin', $scope.user).success(function(response){
+		if(response.state == 'success'){
+			$rootScope.authenticated = true;
+			$rootScope.current_user = response.user.username;
+			$location.path('/');
+	}
+		else {
+			$scope.msg = response.message; 
+		}
+	});
+};
+
+Add the same 2 lines at the $scope.signup method:
+
+$scope.signup = function(){ // handle sign-up requests w/ response
+	$http.post('/auth/signup',$scope.user).success(function(response){
+		if (response.state =='success'){
+			$rootScope.authenticated = true;
+			$rootScope.current_user = response.user.username; // username of logged in user
+			$location.path('/');
+		}
+		else {
+			$scope.msg = response.message;
+		}
+	});
+
+};	
+
+Make sure to declare $rootScope as a dependency to the authController.
+
+
+Conditionally set the "sign-in", "sign-up" and ""sign-out" links
+----------------------------------------------------------------
+
+In index.html:
+
+	<div>
+		<a href="#/">Articles</a> 
+		<a href="#/about">About</a>
+		<span ng-hide="authenticated"> 
+			<a href="#/signup">Sign Up</a>
+			<a href="#/signin">Sign In</a>
+		</span>
+		<span ng-show="authenticated">
+			Welcome {{current_user}}
+			<a href="#" ng-click="signout()">Sign Out</a>
+		</span>
+	</div>
+
+Test behavior 
+ 
+Success!!
+
+
+	
+
+
 
 
 
