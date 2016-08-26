@@ -2,25 +2,244 @@ Implementing Authorization
 --------------------------
 
 1. Only signed-in users should be able to post articles.
-2. All users can view articles posted by others
-3. As the users need to log in to post articles, the user should not be required to enter their user name while posting an article. 
-4. The user should be able to edit and delete their own articles, but should not be able to delete or edit articles posted by other users.
-=============================================================================================================================
 
+2. All users can view articles posted by others
+
+3. As the users need to log in to post articles, the user should not be required to enter their user name while posting an article. 
+
+4. The user should be able to edit and delete their own articles, but should not be able to delete or edit articles posted by other users.
+
+=============================================================================================================================
 Only signed-in users should be able to post articles
 ----------------------------------------------------
 
-1. in routes/api.js:
-
 - add a middleware function before all the other middleware functions in the file:
 
-router.use('/articles', function(req, res, next) {
-	if (req.method == 'GET')
-		return next();
-	else if (req.isAuthenticated())
-		return next();
-	else 
-		res.send ({status: 'Authentication Failure'});
-});
+1. in routes/api.js:
+
+			router.use('/articles', function(req, res, next) {
+				if (req.method == 'GET')
+					return next();
+				else if (req.isAuthenticated())
+					return next();
+				else 
+					res.send ({status: 'Authentication Failure'});
+			});
+
+	- Intercepts all requests to the /api/articles endpoint
+	- If the request is a GET request,
+	- it will call the next middleware function in sequence 
+	- otherwise it checks whether the request is authenticated or not
+	- if authenticated, it will call the next middleware function in sequence 
+	- otherwise it will send this response to the client 
+
+	- In case the request is a post request an the user is not authenticated, the user cannot get past this middlware function and the function for the post request will never get executed. 
+
+2. in routes/api.js:
+
+			router.get('/articles', function(req, res, next) {
+				Article.find (function(err, articles) {
+					if(err){
+						return.res.send(500, err);
+					}
+					return res.send(articles);
+				});
+			});
+
+
+3. In articleApp.js, Look for code that sends post request to API: 
+
+	- in mainController:
+
+			$scope.post = function(){
+				$scope.newArticle.timestamp = Date.now();
+
+			articleService.save($scope.newArticle, function(){
+				$scope.articles.push($scope.newArticle);
+				$scope.newArticle = {username: '', title: '', text: '', timestamp: ''};
+
+			});
+
+	- Modify it:
+
+			$scope.post = function(){ 
+				$scope.newArticle.timestamp = Date.now();
+
+			articleService.save($scope.newArticle, function(response){ 
+				if (response.status == 'Authentication Failure')
+					$location.path('/signin'); 
+
+				$scope.articles.push($scope.newArticle); 
+				$scope.newArticle = {username: '', title: '', text: '', timestamp: ''};
+
+			});
+
+
+
+
+	- the api will send a response which we will accept in a variable
+	- this code will check the status of authentication
+
+4. Add $location as a dependency to mainController
+
+5. Remove the text box we added to accept the username: main.html
+
+	- remove 	<input required type="text" placeholder="Your name" ng-model="newArticle.username" /> <br/><br/>
+
+6. Back in articleApp.js:
+
+	- further modify the post function of the mainController by setting the username to $rootScope.current_user:
+
+			$scope.newArticle.username = $rootScope.current_user;
+
+7. Declare $rootScope as a dependency to mainController
 
 =============================================================================================================================
+The user should be able to edit and delete their own articles
+-------------------------------------------------------------
+
+1. Open api.js: Add some middleware functions to handle the edit and delete requests
+
+			router.delete('/articles/:id', function(req, res, next){
+				Article.remove({_id: req.params.id}, function(err, article) {
+					if(err) {
+						return.res(err);
+					}
+					res.json({ message: 'Successfully deleted' });
+				});
+			});
+
+
+			router.put('/articles', function(req,res, next){
+				Article.findOne({_id: req.body._id}, function (err, article) {
+					if (err) {
+						return.res.send(err);
+					}
+					article.username = req.body.username;
+					article.title = req.body.title;
+					article.text = req.body.text;
+					article.timestamp = req.body.timestamp;
+					article.save(function(err) {
+						if (err) {
+							return.res.send(err);
+						}
+						res.json({ message: 'Article updated!' });
+					});
+				});
+			});
+
+2. Open articleApp.js: articleService should now have delete and put methods:
+
+	former: 
+
+			app.factory('articleService', function($resource) {  
+				return $resource('/api/articles'); 
+			});
+
+	Now:
+
+			app.factory('articleService', function($resource) {  
+				return $resource('/api/articles/:articleId', {articleId: '@id'}, 
+					{update: {method: 'PUT'}}
+				); 
+			});
+
+
+3. Make changes to the front-end main.html:
+
+		<input class="button" type="submit" value="Edit" ng-click="edit(article)"/>
+		<input class="button" type="submit" value="Delete" ng-click="del(article)"/>
+
+	- These buttons have ngClick attributes to js methods that get invoked when clicked 
+
+	- Removed ng-submit from <form> tag and changed to ng-click="post()" in submit button:
+		
+	<form>
+		<input required type="text" placeholder="Article Title" ng-model="newArticle.title" /><br/><br/>
+		<textarea required maxlength="" ="400" placeholder="Article Text" rows="3" ng-model="newArticle.text"></textarea><br/><br/>
+		<input class="button" type="submit" value="Post" ng-click="post()"/>
+	</form>
+
+	- Moved </form> ta to bottom of script
+
+	- use ngShow to toggle the submit button so it can say "update":
+
+	<input class="button" type="submit" value="Post" ng-click="post()" ng-hide="editMode"/>
+	<input class="button" type="submit" value="Update" ng-click="update()" ng-show="editMode"/>
+
+4. Back in articleApp.js, edit mainController:
+
+	- add:
+
+		$scope.editMode = false; 
+
+	- Handle the functions of the edit, update and delete buttons we've added to main.html:
+
+			$scope.edit = function(article){
+				$scope.editMode = true;
+				$scope.newArticle = articleService.get({articleId: article._id});
+			};
+
+			$scope.update = function(article){
+				$scope.newArticle.timestamp = Date.now();
+
+				articleService.update($scope.newArticle, function(response){
+					if (response.status == 'Authentication Failure')
+						$location.path('/signin');
+				else
+				{
+					$scope.articles = articleService.query();
+					$scope.newArticle = {username: '', title: '', text: '', timestamp: ''};
+				}
+				$scope.editMode = false;
+				});
+			};
+
+			$scope.del = function(article){
+				if(confirm ('Are you sure you want to delete this article?'))
+				{
+					articleService.delete({articleId: article._id}, function(response){
+						if(response.status == 'Authentication Failure')
+							$location.path('/signin');
+						else
+						{
+							$scope.artiles = articleService.query();
+							$scope.newArticle = {username: '', title: '', text: '', timestamp: ''};
+						}
+					});
+				}
+			};
+
+5. A user should be able to edit only his/her own articles:
+
+	- In mainController:
+		
+			$scope.isOwnUser = function(article){
+				return (article.username == $rootScope.current_user);
+			}
+
+6. Make changes to the front-end main.html:
+
+		<input class="button" type="submit" value="Edit" ng-click="edit(article)"/ ng-show="isUserOwner(article)">
+		<input class="button" type="submit" value="Delete" ng-click="del(article)" ng-show="isUserOwner(article)"/>
+
+7. Start the app and test!
+
+	1. Tried to post an article, but redirected to sign-in page. Success!
+	2. sign in as tom. I get a "welcome tom". Success!
+	3. successfully submitted an article as tom. Success!
+	4. successfully edited an article as tom. Success! 
+	5. successfully deleted an article as tom. Success! 
+
+
+
+
+
+
+
+
+
+
+
+
+
