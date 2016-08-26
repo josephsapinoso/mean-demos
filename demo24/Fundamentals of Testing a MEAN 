@@ -1,0 +1,37 @@
+Fundamentals of Testing a MEAN 
+------------------------------
+
+1. Over the last vew years, JS has evolved significantly
+2. JS is now a pillar of complex server-side and client-side architectures 
+3. Managing a large JS code base manually is a very difficult task 
+4. Lately, some new tools and frameworks for JS testing have emerged:
+	eg. Mocha, Jasmine
+	- These allow devs to write tests in a structured manner
+	
+
+5. In the traditional app dev process, testing was performed towards the end of the application developments life cycle.
+6. Test-driven Development (TDD) is an application development approach that works on the test-first concept 
+	- Test that define the expected requirement of an isolated chunk of code are created first...
+	- then the code is written to make the tests pass. 
+
+7. In TDD, the following cycle of activites is repeated to implement each requirement:
+	- Create the test --> Pass the test 
+	- Create the test --> Pass the test --> Clean up the code Pass --> the test 
+	- Create the test --> Pass the test --> Clean up the code Pass --> the test --> Create the test
+
+8. Another development approach that emerged from TDD is Behavior-Driven Development (BDD):
+	- In BDD, the focus is on testing the behavior rather than implementation 
+	- A BDD test framework provides developers with a set of self-explanatory methods to describe the test process
+
+9. Test frameworks help developers to create and organize tests
+
+10. Assertion libraries allow developers to use assertion expressions to examine a certain predicate 
+
+11. When the test is run, the assertion is evaluated 
+	- If the assertion evaluates to false, the test fails 
+
+12. Test runners are utilities that enable the developer to easily run and evaluate tests
+
+13. A test runner uses a testing framework with a set of preconfigured properties to evaluate test results in different contexts
+	- a test runner may be configured to run the same test on different browsers and/or environmental variables 
+
