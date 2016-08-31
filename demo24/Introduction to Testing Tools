@@ -1,0 +1,68 @@
+Introduction to Testing Tools
+-----------------------------
+
+1. Mocha Test Framework - to test server-side code
+
+	- Mocha supports TDD and BDD
+	- minimal by structure and does not include a built-in assertion library 
+	- Popular assertion libraries such as should.js can be integrated into mocha 
+	- Supports testing of asynchronous code
+
+		- Notes:
+			
+			- Chai is an assertion library (tools to verify that things are correct.)
+			- Mocha and Jasmine are testing frameworks
+			- Karma is a testing environment
+
+Asynchronous code: With large files, you can't really rely on synchronized code (that is to say, code that is read by the compiler in sequence in a chain.) Large files can halt a linear process, thereby halting your page from loading. To utilize "Asynchronous code", we get Asynchronous APIs instead. 
+
+	- Example:
+		
+		- Synchronous:
+
+		var fs = require('fs)
+		fs.readFile('one.bear')
+		console.log(one)
+
+		- Asynchronous conversion: 
+		
+		var fs = require('fs)
+		fs.readFile('one.bear', function (err, one) {
+			console.log(one)
+		})
+
+Mocha test:
+
+describe('Add Product', function() {
+	before(function() {
+		// runs before all tests in this block	});
+	beforeEach(function() {
+	 	// runs before all tests in this block	});
+	after(function() {
+	 	// runs before all tests in this block	});
+	afterEach (function() {
+	 	// runs before all tests in this block	});
+	it ('should save without error', function () {
+	 	// test logic	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

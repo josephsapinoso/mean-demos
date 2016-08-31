@@ -1,0 +1,5 @@
+Introduction to Client-side and Server-side Testing
+---------------------------------------------------
+
+- Client-side testing involves testing the front-end code (testing AngularJS code)
+- Server-side testing involves testing the back-end code (tesing Express part of app)
